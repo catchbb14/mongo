@@ -1,18 +1,18 @@
 var express = require("express");
 var exphbs = require("express-handlebars");
 var bodyParser = require("body-parser");
-// var logger = require("morgan");
+var logger = require("morgan");
 var mongoose = require("mongoose");
 
 
-var PORT = 3000;
+var axios = require("axios");
+var cheerio = require("cheerio");
+
+var app = express();
+var PORT = process.env.PORT || 3000;
 
 // Require all models
 var db = require("./models");
-
-var app = express();
-
-// Configure middleware
 
 // Use morgan logger for logging requests
 // app.use(logger("dev"));
@@ -24,26 +24,88 @@ app.use(express.static("public"));
 //Setting up handlebars
 app.engine('handlebars', exphbs({
     defaultLayout: 'main',
+    helpers: {
+        saveArticle: function(id) {
+            return `/articles/${id}`;
+        }
+    }
 }));
 
 app.set('view engine', 'handlebars');
 
 // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/mongoHeadlines");
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+mongoose.connect(MONGODB_URI);
 
-db.User.create({ name: "Admin" })
-  .then(function(dbUser) {
-    console.log(dbUser);
-  })
-  .catch(function(err) {
-    console.log(err.message);
-});
 
 //Routes
 // require('./routes/api-routes.js')(app);
 // require('./routes/html-routes.js')(app);
 app.get('/', function(req, res) {
-    res.send("It worked I think!")
+    db.Article.find({})
+        .sort({ _id: -1 })
+        .then(function(dbArticle) {
+            res.render("index", { articles: dbArticle });
+        })
+        .catch( function(err) {
+            res.json(err);
+        })
+})
+
+app.get('/saved', function(req, res) {
+    db.Article.find({saved: true})
+        .sort( { _id: -1 })
+        .then(function(dbArticle) {
+            res.render("saved", { articles: dbArticle });
+        })
+        .catch( function(err) {
+            res.json(err);
+        })
+})
+
+app.get('/scrape', function(req, res) {
+
+    var currentTitles = [];
+    //prevent duplications
+    db.Article.find({}, { title: 1 })
+        .then(function(currentArticles) {
+            currentTitles = currentArticles.map( a => a.title);
+        });
+
+    axios.get("http://www.newsweek.com/").then(function(response) {
+        var $ = cheerio.load(response.data);
+
+        $("article h3").each(function(i, element) {
+
+            var result = {};
+
+            result.title = $(this)
+                .children("a")
+                .text();
+            result.link = "http://www.newsweek.com" + $(this)
+                .children("a")
+                .attr("href");
+            result.summary = $(this)
+                .parent()
+                .children(".summary")
+                .text();
+            result.image = $(this)
+                .parent()
+                .find("img")
+                .attr("src")
+
+            if(currentTitles.indexOf(result.title) == -1) {
+                db.Article.create(result)
+                .then(function(dbArticle){
+                    console.log(dbArticle);
+                })
+                .catch( (err) => res.json.err )
+            }
+        });
+    });
+
+    res.redirect("/");
+
 })
 
 // Start the server
