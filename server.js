@@ -15,7 +15,7 @@ var PORT = process.env.PORT || 3000;
 var db = require("./models");
 
 // Use morgan logger for logging requests
-app.use(logger("dev"));
+// app.use(logger("dev"));
 // Use body-parser for handling form submissions
 app.use(bodyParser.urlencoded({ extended: true }));
 // Use express.static to serve the public folder as a static directory
@@ -24,6 +24,11 @@ app.use(express.static("public"));
 //Setting up handlebars
 app.engine('handlebars', exphbs({
     defaultLayout: 'main',
+    helpers: {
+        saveArticle: function(id) {
+            return `/articles/${id}`;
+        }
+    }
 }));
 
 app.set('view engine', 'handlebars');
@@ -38,6 +43,7 @@ mongoose.connect(MONGODB_URI);
 // require('./routes/html-routes.js')(app);
 app.get('/', function(req, res) {
     db.Article.find({})
+        .sort({ _id: -1 })
         .then(function(dbArticle) {
             res.render("index", { articles: dbArticle });
         })
@@ -84,7 +90,8 @@ app.get('/scrape', function(req, res) {
                 .children(".summary")
                 .text();
             result.image = $(this)
-                .children(".image picture img")
+                .parent()
+                .find("img")
                 .attr("src")
 
             if(currentTitles.indexOf(result.title) == -1) {
@@ -97,7 +104,7 @@ app.get('/scrape', function(req, res) {
         });
     });
 
-    res.send("Scrape complete")
+    res.redirect("/");
 
 })
 
