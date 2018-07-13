@@ -15,7 +15,7 @@ var PORT = process.env.PORT || 3000;
 var db = require("./models");
 
 // Use morgan logger for logging requests
-// app.use(logger("dev"));
+app.use(logger("dev"));
 // Use body-parser for handling form submissions
 app.use(bodyParser.urlencoded({ extended: true }));
 // Use express.static to serve the public folder as a static directory
@@ -62,6 +62,14 @@ app.get('/saved', function(req, res) {
             res.json(err);
         })
 })
+
+app.put("/articles/:id", function(req, res) {
+    db.Article.update({ _id: req.params.id }, { $set: req.body }, function(err, result) {
+      if (err) throw err;
+      console.log(result);
+      res.sendStatus(200);
+    });
+  });
 
 app.get('/scrape', function(req, res) {
 
