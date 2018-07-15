@@ -1,3 +1,5 @@
+		{{> slider }}
+		
 		<!-- Content
 		============================================= -->
 		<section id="content">
@@ -26,7 +28,7 @@
 											<a class="nav-link bg-color-travel active" id="nav-all-tab" data-toggle="tab" href="#nav-all" role="tab" aria-selected="true">All</a>
 										</li>
 										<li class="nav-item">
-											<a class="nav-link bg-color-food" id="nav-save-tab" data-toggle="tab" href="#nav-save" role="tab" aria-selected="false">Saved</a>
+											<a class="nav-link bg-color-food" id="nav-save-tab" href="/saved" role="tab" aria-selected="false">Saved</a>
 										</li>
 									</ul>
 								</div>
@@ -70,219 +72,17 @@
 															<h4 class="t600"><a href={{this.link}}>{{this.title}}</a></h4>
 														</div>
 														<ul class="entry-meta clearfix">
-															<li>
-																<button data-id={{this._id}} class="button saveEvent"><i class="icon-bookmark"></i></button> 
-															</li>
+															{{#unless this.saved}}
+																<li>
+																	<button data-id={{this._id}} class="button button-small saveEvent"><i class="icon-bookmark"></i></button> 
+																</li>
+															{{/unless}}
 														</ul>
 													</div>
 												</article>
 											{{/each}}
 											<!-- Post Article -->
 										
-										</div>
-									</div>
-								</div>
-								<!-- Tab Content 2
-								============================================= -->
-								<div class="tab-pane fade" id="nav-save" role="tabpanel" aria-labelledby="nav-save-tab">
-									<div class="row clearfix">
-										<div class="col-lg-6">
-											<!-- Post Article -->
-											<article class="entry nobottomborder nobottommargin">
-												<div class="entry-image mb-3">
-													<a href="#"><img src="demos/news/images/posts/food/1.jpg" alt="Image 3"></a>
-													<div class="entry-categories "><a href="#" class="bg-food">Food</a></div>
-												</div>
-												<div class="entry-title">
-													<h3><a href="#">The Secret To Food eat lunch Is Revealed</a></h3>
-												</div>
-												<ul class="entry-meta clearfix">
-													<li><span>by</span> <a href="#">John Doe</a></li>
-													<li><i class="icon-time"></i><a href="#">11 Mar 2016</a></li>
-												</ul>
-												<div class="entry-content font-secondary clearfix">
-													<p>Asperiores, tenetur, blanditiis, quaerat odit ex exercitationem pariatur quibusdam veritatis quisquam laboriosam esse beatae hic perferendis. Lorem ipsum dolor sit amet.</p>
-												</div>
-											</article>
-										</div>
-										<div class="col-lg-6">
-											<!-- Post Article -->
-											<article class="spost clearfix">
-												<div class="entry-image">
-													<a href="#"><img src="demos/news/images/posts/food/small/2.jpg" alt=""></a>
-												</div>
-												<div class="entry-c">
-													<div class="entry-title">
-														<h4 class="t600"><a href="#">How To Turn Food eat lunch Into Success</a></h4>
-													</div>
-													<ul class="entry-meta clearfix">
-														<li><span>by</span> <a href="#">John Doe</a></li>
-														<li><i class="icon-time"></i><a href="#">11 Mar 2016</a></li>
-													</ul>
-												</div>
-											</article>
-											<!-- Post Article -->
-											<article class="spost clearfix">
-												<div class="entry-image">
-													<a href="#"><img src="demos/news/images/posts/food/small/3.jpg" alt=""></a>
-												</div>
-												<div class="entry-c">
-													<div class="entry-title">
-														<h4 class="t600"><a href="#">MIT's new robot glove can give you extra fingers.</a></h4>
-													</div>
-													<ul class="entry-meta clearfix">
-														<li><span>by</span> <a href="#">John Doe</a></li>
-														<li><i class="icon-time"></i><a href="#">11 Mar 2016</a></li>
-													</ul>
-												</div>
-											</article>
-											<!-- Post Article -->
-											<article class="spost clearfix">
-												<div class="entry-image">
-													<a href="#"><img src="demos/news/images/posts/food/small/4.jpg" alt=""></a>
-												</div>
-												<div class="entry-c">
-													<div class="entry-title">
-														<h4 class="t600"><a href="#">Use Food to make Someone fall in Love With You</a></h4>
-													</div>
-													<ul class="entry-meta clearfix">
-														<li><span>by</span> <a href="#">John Doe</a></li>
-														<li><i class="icon-time"></i><a href="#">11 Mar 2016</a></li>
-													</ul>
-												</div>
-											</article>
-											<!-- Post Article -->
-											<article class="spost clearfix">
-												<div class="entry-image">
-													<a href="#"><img src="demos/news/images/posts/lifestyle/small/1.jpg" alt=""></a>
-												</div>
-												<div class="entry-c">
-													<div class="entry-title">
-														<h4 class="t600"><a href="#">3 Ways To Have (A) More Appealing food</a></h4>
-													</div>
-													<ul class="entry-meta clearfix">
-														<li><span>by</span> <a href="#">John Doe</a></li>
-														<li><i class="icon-time"></i><a href="#">11 Mar 2016</a></li>
-													</ul>
-												</div>
-											</article>
-											<!-- Post Article -->
-											<article class="spost clearfix">
-												<div class="entry-image">
-													<a href="#"><img src="demos/news/images/posts/lifestyle/small/2.jpg" alt=""></a>
-												</div>
-												<div class="entry-c">
-													<div class="entry-title">
-														<h4 class="t600"><a href="#">Lifestyle Your Way to Success</a></h4>
-													</div>
-													<ul class="entry-meta clearfix">
-														<li><span>by</span> <a href="#">John Doe</a></li>
-														<li><i class="icon-time"></i><a href="#">11 Mar 2016</a></li>
-													</ul>
-												</div>
-											</article>
-										</div>
-									</div>
-								</div>
-								<!-- Tab Content 3
-								============================================= -->
-								<div class="tab-pane fade" id="nav-fashion" role="tabpanel" aria-labelledby="nav-fashion-tab">
-									<div class="row clearfix">
-										<div class="col-lg-6">
-											<!-- Post Article -->
-											<article class="entry nobottomborder nobottommargin">
-												<div class="entry-image mb-3">
-													<a href="#"><img src="demos/news/images/posts/fashion/1.jpg" alt="Image 3"></a>
-													<div class="entry-categories"><a href="#" class="bg-fashion">Fashion</a></div>
-												</div>
-												<div class="entry-title">
-													<h3><a href="#">The Biggest Lie In Fashion</a></h3>
-												</div>
-												<ul class="entry-meta clearfix">
-													<li><span>by</span> <a href="#">John Doe</a></li>
-													<li><i class="icon-time"></i><a href="#">11 Mar 2016</a></li>
-												</ul>
-												<div class="entry-content clearfix">
-													<p>Asperiores, tenetur, blanditiis, quaerat odit ex exercitationem pariatur quibusdam veritatis quisquam laboriosam esse beatae hic perferendis. Lorem ipsum dolor sit amet.</p>
-												</div>
-											</article>
-										</div>
-										<div class="col-lg-6">
-											<!-- Post Article -->
-											<article class="spost clearfix">
-												<div class="entry-image">
-													<a href="#"><img src="demos/news/images/posts/fashion/small/2.jpg" alt=""></a>
-												</div>
-												<div class="entry-c">
-													<div class="entry-title">
-														<h4 class="t600"><a href="#">Top 10 Tips To Grow Your Fashion</a></h4>
-													</div>
-													<ul class="entry-meta clearfix">
-														<li><span>by</span> <a href="#">John Doe</a></li>
-														<li><i class="icon-time"></i><a href="#">11 Mar 2016</a></li>
-													</ul>
-												</div>
-											</article>
-											<!-- Post Article -->
-											<article class="spost clearfix">
-												<div class="entry-image">
-													<a href="#"><img src="demos/news/images/posts/fashion/small/3.jpg" alt=""></a>
-												</div>
-												<div class="entry-c">
-													<div class="entry-title">
-														<h4 class="t600"><a href="#">4 Ways You Can Grow Your Creativity Using Fashion</a></h4>
-													</div>
-													<ul class="entry-meta clearfix">
-														<li><span>by</span> <a href="#">John Doe</a></li>
-														<li><i class="icon-time"></i><a href="#">11 Mar 2016</a></li>
-													</ul>
-												</div>
-											</article>
-											<!-- Post Article -->
-											<article class="spost clearfix">
-												<div class="entry-image">
-													<a href="#"><img src="demos/news/images/posts/fashion/small/4.jpg" alt=""></a>
-												</div>
-												<div class="entry-c">
-													<div class="entry-title">
-														<h4 class="t600"><a href="#">5 Best Ways To Sell Fashion</a></h4>
-													</div>
-													<ul class="entry-meta clearfix">
-														<li><span>by</span> <a href="#">John Doe</a></li>
-														<li><i class="icon-time"></i><a href="#">11 Mar 2016</a></li>
-													</ul>
-												</div>
-											</article>
-											<!-- Post Article -->
-											<article class="spost clearfix">
-												<div class="entry-image">
-													<a href="#"><img src="demos/news/images/posts/lifestyle/small/2.jpg" alt=""></a>
-												</div>
-												<div class="entry-c">
-													<div class="entry-title">
-														<h4 class="t600"><a href="#">What Make Fashion Don't Want You To Know</a></h4>
-													</div>
-													<ul class="entry-meta clearfix">
-														<li><span>by</span> <a href="#">John Doe</a></li>
-														<li><i class="icon-time"></i><a href="#">11 Mar 2016</a></li>
-													</ul>
-												</div>
-											</article>
-											<!-- Post Article -->
-											<article class="spost clearfix">
-												<div class="entry-image">
-													<a href="#"><img src="demos/news/images/posts/lifestyle/small/3.jpg" alt=""></a>
-												</div>
-												<div class="entry-c">
-													<div class="entry-title">
-														<h4 class="t600"><a href="#">Best Fashion Android/iPhone Apps</a></h4>
-													</div>
-													<ul class="entry-meta clearfix">
-														<li><span>by</span> <a href="#">John Doe</a></li>
-														<li><i class="icon-time"></i><a href="#">11 Mar 2016</a></li>
-													</ul>
-												</div>
-											</article>
 										</div>
 									</div>
 								</div>
