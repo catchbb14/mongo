@@ -54,6 +54,7 @@ app.get('/', function(req, res) {
 
 app.get('/saved', function(req, res) {
     db.Article.find({saved: true})
+        .populate("comments")
         .sort( { _id: -1 })
         .then(function(dbArticle) {
             res.render("saved", { articles: dbArticle });
@@ -115,6 +116,18 @@ app.get('/scrape', function(req, res) {
     res.redirect("/");
 
 })
+
+app.post("/articles/:id", function(req, res) {
+    db.Comment.create(req.body).then(function(data) {
+            return db.Article.findOneAndUpdate({ _id: req.params.id },
+                 { $push: { comments: data._id } }, { new: true });
+    }).then(function(article) {
+        res.json(article);
+    })
+    .catch(function(err) {
+        res.json(err);
+    })
+  });
 
 // Start the server
 app.listen(PORT, function() {
